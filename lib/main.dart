@@ -41,13 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
   var telController = TextEditingController();
   var emailController = TextEditingController();
   var avatarController = TextEditingController();
-  List pessoa = ['testes'];
+  int idUser = 0;
 
   String logradouro = '';
   String bairro = '';
   String localidade = '';
   String estado = '';
   var endereco = '';
+
   List<Person> persons = [];
 
   @override
@@ -59,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add And Delete List"),
-        backgroundColor: Colors.redAccent,
+        title: const Text("Cadastro"),
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -157,23 +158,53 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )),
           Expanded(
-              flex: 5,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: pessoa.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        padding: const EdgeInsets.only(bottom: 14),
-                        child: Card(
-                          color: const Color.fromARGB(255, 248, 248, 248),
-                          child: Column(
-                            children: [
-                              Text(pessoa[index]),
-                            ],
+            flex: 5,
+            child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: persons.map((userone) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Card(
+                color: const Color.fromARGB(255, 248, 248, 248),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(5), // Image border
+                      child: SizedBox.fromSize(
+                        child: Image.network(userone.avatar.toString(),
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "#${userone.id} - ${userone.name}",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Color.fromARGB(255, 36, 35, 35)),
                           ),
-                        ));
-                  })),
+                          Text(
+                            "${userone.address}\n${userone.phone}\n${userone.email}",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 15.0,
+                                color: Color.fromARGB(255, 36, 35, 35)),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+              }).toList(),
+            ),
+          )
         ]),
       ),
       floatingActionButton: FloatingActionButton(
@@ -198,12 +229,14 @@ class _MyHomePageState extends State<MyHomePage> {
             log('Request failed with status: ${response.statusCode}.');
           }
 
+          idUser++;
           persons.add(Person(
-              id: "5",
-              name: "Hari Prasad Chaudhary",
-              phone: "9812122233",
-              address: "Kathmandu, Nepal",
-              avatar: " "));
+              id: '$idUser',
+              name: nomeController.text,
+              phone: telController.text,
+              address: endereco,
+              email: emailController.text,
+              avatar: avatarController.text));
           setState(() {});
         },
       ),
@@ -222,11 +255,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class Person {
   //modal class for Person object
-  String id, name, phone, address, avatar;
+  String id, name, phone, address, avatar, email;
   Person(
       {required this.id,
       required this.name,
       required this.phone,
       required this.address,
+      required this.email,
       required this.avatar});
 }
