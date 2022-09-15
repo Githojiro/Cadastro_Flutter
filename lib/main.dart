@@ -173,9 +173,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: SizedBox.fromSize(
                         child: Image.network(userone.avatar.toString(),
                             width: double.infinity,
-                            height: 250,
+                            height: 200,
                             fit: BoxFit.cover),
-                        //Não está funcionando, tenta carregar mas todas dão erro. Sugestão pra Upgrade: CachedNetworkImage.
+                            //precisa de melhorias, talvez um CachedNetworkImage.
                       ),
                     ),
                     Padding(
