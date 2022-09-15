@@ -175,6 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: double.infinity,
                             height: 250,
                             fit: BoxFit.cover),
+                        //Não está funcionando, tenta carregar mas todas dão erro. Sugestão pra Upgrade: CachedNetworkImage.
                       ),
                     ),
                     Padding(
